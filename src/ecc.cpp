@@ -45,6 +45,10 @@ ECPoint ECPoint::operator+(const ECPoint& other) const {
   return ECPoint(x3, y3);
 }
 
+ECPoint ECPoint::operator*(const int& other) const {
+
+}
+
 bool ECPoint::isPointOnECC(const Fp& x, const Fp& y) {
   return (y * y) == (x*x*x + b);
 }
