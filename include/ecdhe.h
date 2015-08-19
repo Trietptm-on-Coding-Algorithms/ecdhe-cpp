@@ -17,6 +17,7 @@ class ECPoint {
     mpz_class x, y;
   public:
     ECPoint(mpz_class _x, mpz_class _y);
+    friend std::ostream& operator<<(std::ostream&, const ECPoint&);
 
     static bool isPointOnECC(mpz_class x, mpz_class y) {
       return (y * y) % secp256k1_p == (x*x*x + secp256k1_b) % secp256k1_p;
