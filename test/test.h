@@ -1,6 +1,8 @@
 #pragma once
 
-#include <ecdhe.h>
+#include "ecdhe.h"
+#include "ecpoint.h"
+#include "fp.h"
 
 #define ES_ASSERT_EQ(x,y) do {\
   st_test++;\

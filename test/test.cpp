@@ -3,14 +3,12 @@
 static int st_err = 0, st_test = 0;
 
 void test_ecc_point() {
-  ECPoint P(mpz_class("0x8692fc91a13aecdd636563f4d57065826475fe16a070e436a384fd465c22a590"), mpz_class("0xec90f12d63ea8e616afcb7088d2bf7bee7211b59b254839c79815c3da7f1ca54"));
-  ECPoint Q(mpz_class("0xc6045a989183a6493c85c2d925ae46eecf7e4760c8c7a0a2a611fecf54f7719e"), mpz_class("0xdac1c37ff7b22f4b0f7889e2275d541a0c06cde44b55891f4f1dca86914659c5"));
-  ES_ASSERT_EQ(ECPoint::isPointOnECC(mpz_class(ES_ECC_X), mpz_class(ES_ECC_Y)), true);
-  ES_ASSERT_EQ(ECPoint::isPointOnECC(0, 1), false);
-  ES_ASSERT_EQ(P+Q, ECPoint(
-        mpz_class("98520248413506909800951464424767143162018370521327345505766116972348589848344"),
-        mpz_class("3545839799967974179505581531658653562100449522461009153640445279701593785652"))
- );
+  ECPoint P(Fp("0x104793ff3eca884f3214de11e39d5335d86d27cc126622c26a3ec9e8bfa079"), Fp("0x3bb3614644928b2d7c287ae2e40c6058fc517f8322737db406a816fde702602f"));
+  ECPoint Q(Fp("0x28116cf661b0b8806e100194ed935d9507b0b8c8b02f7327d1ee2df8974c0"), Fp("0xc585109a622f2062a4e8f7110ffc7fc9970720bb6beead10ab63c2893fccab76"));
+
+  ES_ASSERT_EQ(ECPoint::isPointOnECC(Fp(ES_ECC_X), Fp(ES_ECC_Y)), true);
+  ES_ASSERT_EQ(ECPoint::isPointOnECC(Fp(0), Fp(1)), false);
+  ES_ASSERT_EQ(P+Q, ECPoint(Fp("0xf9c603cbe59cef943f5adff0f358cd290603a8d53168ec36debaa50c1263971e"), Fp("0xf26a460469711b4d1f7e37073cfeb73f2b86a5570ff1c261be6c21ec9ca7c40f")));
 }
 
 void exec_test() {
@@ -22,5 +20,7 @@ void exec_test() {
 }
 
 int main() {
+  Fp::init("0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f");
+  ECPoint::init();
   exec_test();
 }

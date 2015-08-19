@@ -1,1 +1,1 @@
-OBJS += ecc.o main.o
+OBJS += ecc.o main.o fp.o

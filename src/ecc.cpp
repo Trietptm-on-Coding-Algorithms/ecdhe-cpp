@@ -1,4 +1,5 @@
-#include "ecdhe.h"
+#include "ecpoint.h"
+#include "fp.h"
 
 mpz_class ECPoint::p;
 mpz_class ECPoint::a;
@@ -10,7 +11,7 @@ void ECPoint::init() {
   b.set_str("7", 10);
 }
 
-ECPoint::ECPoint(mpz_class _x, mpz_class _y) : x(_x), y(_y) {
+ECPoint::ECPoint(const Fp& _x, const Fp& _y) : x(_x), y(_y) {
   if (!isPointOnECC(_x, _y)) {
     std::cerr << "Error: Point (" << _x << ", " << _y << ") is not point on this curve" << std::endl;
     exit(-1);
@@ -22,38 +23,28 @@ std::ostream& operator<<(std::ostream& _os, const ECPoint& ptr) {
   return _os;
 }
 
-bool ECPoint::operator==(const ECPoint& other) {
+bool ECPoint::operator==(const ECPoint& other) const {
   return x == other.x && y == other.y;
 }
 
-bool ECPoint::operator!=(const ECPoint& other) {
+bool ECPoint::operator!=(const ECPoint& other) const {
   return !(*this == other);
 }
 
-ECPoint ECPoint::operator+(const ECPoint& other) {
-  mpz_class x3(0), y3(0), l(0);
-  if(x != other.x) {
+ECPoint ECPoint::operator+(const ECPoint& other) const {
+  Fp x3(0), y3(0), l(0);
+
+  if (x != other.x) {
     l = (other.y - y) / (other.x - x);
-    std::cout << (other.y - y)/(other.x - x) << std::endl;
   } else {
-    l = ((3*x*x) + a)/(2*y);
+    l = (Fp(3)*x*x + Fp(a)) / Fp(2)*y;
   }
-  l %= p;
-  std::cout << l << std::endl;
 
-  x3 = ((l*l) - x - other.x) % p;
-  y3 = (l*(x - x3 % p)) % p - y % p;
-  return ECPoint(x3 % p, y3 % p);
+  x3 = (l*l - (x + other.x));
+  y3 = (l*x - l*x3 - y);
+  return ECPoint(x3, y3);
 }
 
-bool ECPoint::isPointOnECC(mpz_class x, mpz_class y) {
-  return (y * y) % p == (x*x*x + b) % p;
+bool ECPoint::isPointOnECC(const Fp& x, const Fp& y) {
+  return (y * y) == (x*x*x + b);
 }
-
-class Initializer {
-  public:
-    Initializer() {
-      ECPoint::init();
-    }
-};
-Initializer dummy;

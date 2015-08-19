@@ -29,7 +29,7 @@ debug: $(BINDIR)/$(TARGET)
 release: EX_FLAGS = $(RELEASE_FLAGS)
 release: $(BINDIR)/$(TARGET)
 
-test: $(TESTDIR)/*.cpp $(SRCDIR)/ecc.cpp
+test: $(TESTDIR)/*.cpp $(SRCDIR)/ecc.cpp $(SRCDIR)/fp.cpp
 	$(CC) -o $(TESTDIR)/ut $(DEBUG_FLAGS) $(CFLAGS) $(LDFLAGS) -I$(TESTDIR) $^
 	$(TESTDIR)/ut
 
