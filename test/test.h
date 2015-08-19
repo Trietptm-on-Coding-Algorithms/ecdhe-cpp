@@ -1,6 +1,6 @@
 #pragma once
 
-#include <fft.h>
+#include <ecdhe.h>
 
 #define ES_ASSERT_EQ(x,y) do {\
   st_test++;\
