@@ -12,6 +12,7 @@ class ECPoint {
     static mpz_class p;
     static mpz_class a;
     static mpz_class b;
+    bool infinity;
 
   public:
     Fp x, y;
@@ -20,7 +21,9 @@ class ECPoint {
     bool operator==(const ECPoint& other) const;
     bool operator!=(const ECPoint& other) const;
     ECPoint operator+(const ECPoint& other) const;
+    ECPoint operator*(int n) const;
     friend std::ostream& operator<<(std::ostream&, const ECPoint&);
 
     static bool isPointOnECC(const Fp& x, const Fp& y);
+    bool isInfinity();
 };

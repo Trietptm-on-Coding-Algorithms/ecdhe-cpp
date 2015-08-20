@@ -37,7 +37,7 @@ ECPoint ECPoint::operator+(const ECPoint& other) const {
   if (x != other.x) {
     l = (other.y - y) / (other.x - x);
   } else {
-    l = (Fp(3)*x*x + Fp(a)) / Fp(2)*y;
+    l = (Fp(3)*x*x) / (Fp(2)*y);
   }
 
   x3 = (l*l - (x + other.x));
@@ -45,8 +45,22 @@ ECPoint ECPoint::operator+(const ECPoint& other) const {
   return ECPoint(x3, y3);
 }
 
-ECPoint ECPoint::operator*(const int& other) const {
-
+ECPoint ECPoint::operator*(int n) const {
+  if (n == 1) {
+    return *this;
+  } else if (n == 2) {
+    return *this + *this;
+  }
+  ECPoint P(*this);
+  ECPoint ret(P);
+  while(n != 0) {
+    if ((n & 1) == 1) {
+      ret = P + ret;
+    }
+    P = P+P;
+    n >>= 1;
+  }
+  return ret;
 }
 
 bool ECPoint::isPointOnECC(const Fp& x, const Fp& y) {
