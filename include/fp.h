@@ -11,13 +11,13 @@ class Fp {
     static mpz_class p;
   public:
     static void init(const char *);
-    Fp operator+(const Fp&) const;
-    Fp operator-(const Fp&) const;
-    Fp operator*(const Fp&) const;
-    Fp operator/(const Fp&) const;
-    bool operator==(const Fp&) const;
-    bool operator!=(const Fp&) const;
 
+    friend Fp operator+(const Fp&, const Fp&);
+    friend Fp operator-(const Fp&, const Fp&);
+    friend Fp operator*(const Fp&, const Fp&);
+    friend Fp operator/(const Fp&, const Fp&);
+    friend bool operator==(const Fp&, const Fp&);
+    friend bool operator!=(const Fp&, const Fp&);
     friend std::ostream& operator<<(std::ostream&, const Fp&);
 
     Fp(const mpz_class& _x) : x(_x % p) { }

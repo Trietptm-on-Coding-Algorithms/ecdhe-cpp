@@ -23,35 +23,35 @@ std::ostream& operator<<(std::ostream& _os, const ECPoint& ptr) {
   return _os;
 }
 
-bool ECPoint::operator==(const ECPoint& other) const {
-  return x == other.x && y == other.y;
+bool operator==(const ECPoint& me, const ECPoint& other) {
+  return me.x == other.x && me.y == other.y;
 }
 
-bool ECPoint::operator!=(const ECPoint& other) const {
-  return !(*this == other);
+bool operator!=(const ECPoint& me, const ECPoint& other) {
+  return !(me == other);
 }
 
-ECPoint ECPoint::operator+(const ECPoint& other) const {
+ECPoint operator+(const ECPoint& me, const ECPoint& other) {
   Fp x3(0), y3(0), l(0);
 
-  if (x != other.x) {
-    l = (other.y - y) / (other.x - x);
+  if (me.x != other.x) {
+    l = (other.y - me.y) / (other.x - me.x);
   } else {
-    l = (Fp(3)*x*x) / (Fp(2)*y);
+    l = (Fp(3)*me.x*me.x) / (Fp(2)*me.y);
   }
 
-  x3 = (l*l - (x + other.x));
-  y3 = (l*x - l*x3 - y);
+  x3 = (l*l - (me.x + other.x));
+  y3 = (l*me.x - l*x3 - me.y);
   return ECPoint(x3, y3);
 }
 
-ECPoint ECPoint::operator*(int n) const {
+ECPoint operator*(const ECPoint& me, int n) {
   if (n == 1) {
-    return *this;
+    return me;
   } else if (n == 2) {
-    return *this + *this;
+    return me + me;
   }
-  ECPoint P(*this);
+  ECPoint P(me);
   ECPoint ret(P);
   while(n != 0) {
     if ((n & 1) == 1) {

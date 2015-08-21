@@ -16,14 +16,15 @@ class ECPoint {
 
   public:
     Fp x, y;
-    static void init();
-    ECPoint(const Fp& _x, const Fp& _y);
-    bool operator==(const ECPoint& other) const;
-    bool operator!=(const ECPoint& other) const;
-    ECPoint operator+(const ECPoint& other) const;
-    ECPoint operator*(int n) const;
-    friend std::ostream& operator<<(std::ostream&, const ECPoint&);
-
-    static bool isPointOnECC(const Fp& x, const Fp& y);
+    ECPoint(const Fp&, const Fp&);
     bool isInfinity();
+
+    static void init();
+    static bool isPointOnECC(const Fp&, const Fp&);
+
+    friend bool operator==(const ECPoint&, const ECPoint&);
+    friend bool operator!=(const ECPoint&, const ECPoint&);
+    friend ECPoint operator+(const ECPoint&, const ECPoint&);
+    friend ECPoint operator*(const ECPoint&, int);
+    friend std::ostream& operator<<(std::ostream&, const ECPoint&);
 };

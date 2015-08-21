@@ -15,33 +15,33 @@ void Fp::init(const char *prime) {
     throw std::runtime_error("not positive");
   }
 }
-Fp Fp::operator+(const Fp& rhs) const {
-  return Fp(x + rhs.x);
+Fp operator+(const Fp& me, const Fp& rhs) {
+  return Fp(me.x + rhs.x);
 }
-Fp Fp::operator-(const Fp& rhs) const {
-  mpz_class c(x - rhs.x);
+Fp operator-(const Fp& me, const Fp& rhs) {
+  mpz_class c(me.x - rhs.x);
   if (c < 0) {
-    c += p;
+    c += Fp::p;
   }
   return Fp(c);
 }
 
-Fp Fp::operator*(const Fp& o) const {
-  return Fp(x * o.x);
+Fp operator*(const Fp& me, const Fp& rhs) {
+  return Fp(me.x * rhs.x);
 }
 
-Fp Fp::operator/(const Fp& o) const { 
-  mpz_class c(o.x);
-  invMod(c, o.x, p);
-  return *this * c;
+Fp operator/(const Fp& me, const Fp& rhs) { 
+  mpz_class c(rhs.x);
+  invMod(c, rhs.x, Fp::p);
+  return me * c;
 }
 
-bool Fp::operator!=(const Fp& o) const {
-  return !(*this == o);
+bool operator!=(const Fp& me, const Fp& rhs) {
+  return !(me == rhs);
 }
 
-bool Fp::operator==(const Fp& o) const {
-  return x == o.x;
+bool operator==(const Fp& me, const Fp& rhs) {
+  return me.x == rhs.x;
 }
 
 std::ostream& operator<<(std::ostream& os, const Fp& o) {
