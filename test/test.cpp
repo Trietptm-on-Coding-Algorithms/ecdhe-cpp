@@ -2,6 +2,19 @@
 
 static int st_err = 0, st_test = 0;
 
+void test_ecdhe() {
+  Fp::init("0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f");
+  ECPoint G = ECPoint(mpz_class(ES_ECC_X), mpz_class(ES_ECC_Y));
+  mpz_class a = get_random_bytes(1024);
+  mpz_class b = get_random_bytes(1024);
+
+  ECPoint kA = a*G;
+  ECPoint kB = b*G;
+  ECPoint secret_A = kA * b;
+  ECPoint secret_B = kB * a;
+
+}
+
 void test_ecc_point() {
   Fp::init("0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f");
   ECPoint P(Fp("0x104793ff3eca884f3214de11e39d5335d86d27cc126622c26a3ec9e8bfa079"), Fp("0x3bb3614644928b2d7c287ae2e40c6058fc517f8322737db406a816fde702602f"));

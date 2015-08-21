@@ -25,11 +25,9 @@ Fp operator-(const Fp& me, const Fp& rhs) {
   }
   return Fp(c);
 }
-
 Fp operator*(const Fp& me, const Fp& rhs) {
   return Fp(me.x * rhs.x);
 }
-
 Fp operator/(const Fp& me, const Fp& rhs) { 
   mpz_class c(rhs.x);
   invMod(c, rhs.x, Fp::p);
@@ -39,7 +37,6 @@ Fp operator/(const Fp& me, const Fp& rhs) {
 bool operator!=(const Fp& me, const Fp& rhs) {
   return !(me == rhs);
 }
-
 bool operator==(const Fp& me, const Fp& rhs) {
   return me.x == rhs.x;
 }
@@ -48,22 +45,18 @@ std::ostream& operator<<(std::ostream& os, const Fp& rhs) {
   os << rhs.x;
   return os;
 }
-
 Fp operator+=(Fp& me, const Fp& rhs) {
   me = me + rhs;
   return me;
 }
-
 Fp operator-=(Fp& me, const Fp& rhs) {
   me = me - rhs;
   return me;
 }
-
 Fp operator*=(Fp& me, const Fp& rhs) {
   me = me * rhs;
   return me;
 }
-
 Fp operator/=(Fp& me, const Fp& rhs) {
   me = me / rhs;
   return me;
