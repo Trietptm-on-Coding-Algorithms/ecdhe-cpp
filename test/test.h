@@ -15,7 +15,7 @@
   try { \
     if(!(cond)) { \
       std::cout << "\033[31mFAILED\033[0m" << std::endl; \
-      std::cerr << "[-] \033[31mAssertion Failed: <" << __FILE__ << "> " << __FUNCTION__ << ":" << __LINE__ << " -> !(" << #cond << "\033[0m" << std::endl;\
+      std::cerr << "[-] \033[31mAssertion Failed: <" << __FILE__ << "> " << __FUNCTION__ << ":" << __LINE__ << " -> !(" << #cond << ")\033[0m" << std::endl;\
       st_err++; \
     } else { \
       std::cout << "\033[32mOK\033[0m" << std::endl; \

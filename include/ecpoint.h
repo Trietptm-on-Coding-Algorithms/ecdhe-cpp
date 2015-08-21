@@ -30,7 +30,10 @@ class ECPoint {
     friend bool operator==(const ECPoint&, const ECPoint&);
     friend bool operator!=(const ECPoint&, const ECPoint&);
     friend ECPoint operator+(const ECPoint&, const ECPoint&);
-    friend ECPoint operator*(const ECPoint&, int);
+    friend ECPoint operator*(const ECPoint&, const mpz_class&);
     friend std::ostream& operator<<(std::ostream&, const ECPoint&);
 };
 
+ECPoint operator*(const ECPoint&, int);
+ECPoint operator*(int, const ECPoint&);
+ECPoint operator*(const mpz_class&, const ECPoint&);

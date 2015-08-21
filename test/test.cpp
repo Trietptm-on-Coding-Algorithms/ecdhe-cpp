@@ -16,10 +16,10 @@ void test_ecc_point() {
   ES_ASSERT_EQ(ECPoint::isPointOnECC(Fp(0), Fp(1)), false);
   ES_ASSERT_EQ(P+Q, ECPoint(Fp("0xf9c603cbe59cef943f5adff0f358cd290603a8d53168ec36debaa50c1263971e"), Fp("0xf26a460469711b4d1f7e37073cfeb73f2b86a5570ff1c261be6c21ec9ca7c40f")));
   ES_ASSERT_EQ(R+R, S);
-  ES_ASSERT_EQ(R*2, S);
-  ES_ASSERT_EQ(R*3, U);
-  ES_ASSERT_EQ(R*4, V);
-  ES_ASSERT_EQ(R*24,T);
+  ES_ASSERT_EQ(2*R, S);
+  ES_ASSERT_EQ(3*R, U);
+  ES_ASSERT_EQ(4*R, V);
+  ES_ASSERT_EQ(24*R,T);
 }
 
 void test_fp() {
