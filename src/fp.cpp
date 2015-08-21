@@ -37,12 +37,19 @@ Fp operator/(const Fp& me, const Fp& rhs) {
   return me * c;
 }
 
-bool operator!=(const Fp& me, const Fp& rhs) {
-  return !(me == rhs);
+bool operator==(const Fp& me, const int rhs){
+  return me == Fp(rhs);
 }
 bool operator==(const Fp& me, const Fp& rhs) {
   return me.x == rhs.x;
 }
+bool operator!=(const Fp& me, const Fp& rhs) {
+  return !(me == rhs);
+}
+bool operator!=(const Fp& me, const int rhs){
+  return !(me == Fp(rhs));
+}
+
 
 std::ostream& operator<<(std::ostream& os, const Fp& rhs) {
   os << rhs.x;

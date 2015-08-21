@@ -36,25 +36,8 @@ class Fp {
     }
 };
 
-template <typename T>
-bool operator==(const Fp& me, const T& rhs) {
-  return me == Fp(rhs);
-}
-
-template <typename T>
-bool operator!=(const Fp& me, const T& rhs) {
-  return !(me == Fp(rhs));
-}
-
-template <typename T>
-Fp operator%(const Fp& me, const T& rhs) {
-  Fp r(rhs);
-  if ( r * (me / r) == me) {
-    return 0;
-  } else {
-    return me - (r * (me / r));
-  }
-}
+bool operator==(const Fp& me, const int rhs);
+bool operator!=(const Fp& me, const int rhs);
 
 Fp operator+=(Fp& me, const Fp& rhs);
 Fp operator-=(Fp& me, const Fp& rhs);
