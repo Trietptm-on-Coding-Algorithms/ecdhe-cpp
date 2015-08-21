@@ -48,3 +48,23 @@ std::ostream& operator<<(std::ostream& os, const Fp& rhs) {
   os << rhs.x;
   return os;
 }
+
+Fp operator+=(Fp& me, const Fp& rhs) {
+  me = me + rhs;
+  return me;
+}
+
+Fp operator-=(Fp& me, const Fp& rhs) {
+  me = me - rhs;
+  return me;
+}
+
+Fp operator*=(Fp& me, const Fp& rhs) {
+  me = me * rhs;
+  return me;
+}
+
+Fp operator/=(Fp& me, const Fp& rhs) {
+  me = me / rhs;
+  return me;
+}

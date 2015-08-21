@@ -49,6 +49,7 @@ ECPoint operator+(const ECPoint& me, const ECPoint& other) {
 
   x3 = (l*l - (me.x + other.x));
   y3 = (l*me.x - l*x3 - me.y);
+  std::cout << x3 << y3 << std::endl;
   return ECPoint(x3, y3);
 }
 
@@ -56,17 +57,20 @@ ECPoint operator*(const ECPoint& me, int n) {
   if (n == 1) {
     return me;
   } else if (n == 2) {
+    std::cout << me << std::endl;
     return me + me;
   }
   ECPoint P(me);
-  ECPoint ret(P);
+  ECPoint ret;
   while(n != 0) {
-    if ((n & 1) == 1) {
+    if (n % 2 == 1) {
       ret = P + ret;
     }
-    P = P+P;
-    n >>= 1;
+    P = P*2;
+    n /= 2;
+    //std::cout << ret << " : " << P << " : " << n << std::endl;
   }
+  std::cout << ret << " : " << P << " : " << n << std::endl;
   return ret;
 }
 

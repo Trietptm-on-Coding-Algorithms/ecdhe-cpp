@@ -33,3 +33,4 @@ class ECPoint {
     friend ECPoint operator*(const ECPoint&, int);
     friend std::ostream& operator<<(std::ostream&, const ECPoint&);
 };
+
