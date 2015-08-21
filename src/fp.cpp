@@ -25,6 +25,9 @@ Fp operator-(const Fp& me, const Fp& rhs) {
   }
   return Fp(c);
 }
+Fp operator-(const Fp& me) {
+  return Fp(-me.x) + Fp::p;
+}
 Fp operator*(const Fp& me, const Fp& rhs) {
   return Fp(me.x * rhs.x);
 }

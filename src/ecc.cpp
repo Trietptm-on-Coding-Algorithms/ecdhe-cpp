@@ -58,6 +58,17 @@ ECPoint operator+(const ECPoint& me, const ECPoint& other) {
   return ECPoint(x3, y3);
 }
 
+ECPoint operator-(const ECPoint& me, const ECPoint& other) {
+  return me + -other;
+}
+
+ECPoint operator-(const ECPoint& me) {
+  if (me.isInfinity()) {
+    return me;
+  }
+  return ECPoint(me.x, -me.y);
+}
+
 ECPoint operator*(const ECPoint& me, const mpz_class& n) {
   mpz_class d = mpz_class(n);
   if (n == 1) {

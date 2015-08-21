@@ -22,6 +22,7 @@ class ECPoint {
     bool isInfinity() const {
       return infinity;
     }
+
     void set(const Fp&, const Fp&);
 
     static void init();
@@ -30,8 +31,10 @@ class ECPoint {
     friend bool operator==(const ECPoint&, const ECPoint&);
     friend bool operator!=(const ECPoint&, const ECPoint&);
     friend ECPoint operator+(const ECPoint&, const ECPoint&);
+    friend ECPoint operator-(const ECPoint&, const ECPoint&);
     friend ECPoint operator*(const ECPoint&, const mpz_class&);
     friend std::ostream& operator<<(std::ostream&, const ECPoint&);
+    friend ECPoint operator-(const ECPoint&);
 };
 
 ECPoint operator*(const ECPoint&, int);

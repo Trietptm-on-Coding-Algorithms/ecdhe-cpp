@@ -14,6 +14,7 @@ class Fp {
 
     friend Fp operator+(const Fp&, const Fp&);
     friend Fp operator-(const Fp&, const Fp&);
+    friend Fp operator-(const Fp&);
     friend Fp operator*(const Fp&, const Fp&);
     friend Fp operator/(const Fp&, const Fp&);
     friend bool operator==(const Fp&, const Fp&);
