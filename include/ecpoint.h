@@ -12,12 +12,17 @@ class ECPoint {
     static mpz_class p;
     static mpz_class a;
     static mpz_class b;
+    Fp x, y;
     bool infinity;
 
   public:
-    Fp x, y;
     ECPoint(const Fp&, const Fp&);
-    bool isInfinity();
+    ECPoint() : x(0), y(0), infinity(true) { }
+
+    bool isInfinity() const {
+      return infinity;
+    }
+    void set(const Fp&, const Fp&);
 
     static void init();
     static bool isPointOnECC(const Fp&, const Fp&);

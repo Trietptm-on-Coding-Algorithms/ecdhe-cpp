@@ -44,7 +44,7 @@ bool operator==(const Fp& me, const Fp& rhs) {
   return me.x == rhs.x;
 }
 
-std::ostream& operator<<(std::ostream& os, const Fp& o) {
-  os << o.x;
+std::ostream& operator<<(std::ostream& os, const Fp& rhs) {
+  os << rhs.x;
   return os;
 }

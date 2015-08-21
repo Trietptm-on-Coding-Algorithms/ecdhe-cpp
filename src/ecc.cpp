@@ -1,5 +1,6 @@
 #include "ecpoint.h"
 #include "fp.h"
+#include <stdexcept>
 
 mpz_class ECPoint::p;
 mpz_class ECPoint::a;
@@ -11,11 +12,17 @@ void ECPoint::init() {
   b.set_str("7", 10);
 }
 
-ECPoint::ECPoint(const Fp& _x, const Fp& _y) : x(_x), y(_y) {
+ECPoint::ECPoint(const Fp& _x, const Fp& _y) : x(), y(), infinity(false) {
+  set(_x, _y);
+}
+
+void ECPoint::set(const Fp& _x, const Fp& _y) {
   if (!isPointOnECC(_x, _y)) {
     std::cerr << "Error: Point (" << _x << ", " << _y << ") is not point on this curve" << std::endl;
-    exit(-1);
+    throw std::runtime_error("");
   }
+  x = _x;
+  y = _y;
 }
 
 std::ostream& operator<<(std::ostream& _os, const ECPoint& ptr) {
@@ -24,7 +31,7 @@ std::ostream& operator<<(std::ostream& _os, const ECPoint& ptr) {
 }
 
 bool operator==(const ECPoint& me, const ECPoint& other) {
-  return me.x == other.x && me.y == other.y;
+  return (me.x == other.x && me.y == other.y);
 }
 
 bool operator!=(const ECPoint& me, const ECPoint& other) {
