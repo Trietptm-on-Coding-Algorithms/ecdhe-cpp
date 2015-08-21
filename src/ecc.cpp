@@ -19,7 +19,7 @@ ECPoint::ECPoint(const Fp& _x, const Fp& _y) : x(), y(), infinity(false) {
 void ECPoint::set(const Fp& _x, const Fp& _y) {
   if (!isPointOnECC(_x, _y)) {
     std::cerr << "Error: Point (" << _x << ", " << _y << ") is not point on this curve" << std::endl;
-    throw std::runtime_error("");
+    throw std::runtime_error("Point is not point on this curve.");
   }
   x = _x;
   y = _y;
