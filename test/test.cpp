@@ -2,17 +2,21 @@
 
 static int st_err = 0, st_test = 0;
 
-void test_ecdhe() {
+void test_ecdhe(int count) {
   Fp::init("0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f");
+  std::cout << "[+] " << count << " time(s) ECDHE Test." << std::endl;
   ECPoint G = ECPoint(mpz_class(ES_ECC_X), mpz_class(ES_ECC_Y));
-  mpz_class a = get_random_bytes(1024);
-  mpz_class b = get_random_bytes(1024);
+  for (int i = 0; i < count; i++) {
+    mpz_class a = get_random_bytes(64);
+    mpz_class b = get_random_bytes(64);
 
-  ECPoint kA = a*G;
-  ECPoint kB = b*G;
-  ECPoint secret_A = kA * b;
-  ECPoint secret_B = kB * a;
+    ECPoint kA = a*G;
+    ECPoint kB = b*G;
+    ECPoint secret_A = kA * b;
+    ECPoint secret_B = kB * a;
 
+    ES_ASSERT_EQ(secret_A, secret_B);
+  }
 }
 
 void test_ecc_point() {
@@ -55,6 +59,7 @@ void test_fp() {
 void exec_test() {
   test_fp();
   test_ecc_point();
+  test_ecdhe(20);
   printf("[+] Tested %d tests.\n", st_test);
   if(st_err) {
     printf("[+] %d error(s) found.\n", st_err);

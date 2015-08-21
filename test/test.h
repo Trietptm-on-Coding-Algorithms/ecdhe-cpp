@@ -11,7 +11,7 @@
 
 #define ES_ASSERTION(cond) do {\
   st_test++;\
-  std::cout << "[+] Testing " << #cond << "...";\
+  std::cout << "[+] Testing #" << st_test << " : "<< #cond << "...";\
   try { \
     if(!(cond)) { \
       std::cout << "\033[31mFAILED\033[0m" << std::endl; \
