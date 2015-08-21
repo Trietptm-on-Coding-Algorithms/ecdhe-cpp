@@ -21,7 +21,11 @@ class Fp {
     friend std::ostream& operator<<(std::ostream&, const Fp&);
 
     Fp() : x(0) { }
-    Fp(const mpz_class& _x) : x(_x % p) { }
+    Fp(const mpz_class& _x) : x(_x % p) {
+      if (_x < 0) {
+        x = (_x + p) % p;
+      }
+    }
     Fp(const char *_x) {
       if (_x == 0) {
         x = 0;

@@ -32,6 +32,7 @@ void test_fp() {
   ES_ASSERT_EQ(b-c*b, Fp(3));
   ES_ASSERT_EQ(d/b, Fp(5));
   ES_ASSERT_EQ(b+c-d, Fp(0));
+  ES_ASSERT_EQ(Fp(-3), Fp(4));
 }
 
 void exec_test() {
