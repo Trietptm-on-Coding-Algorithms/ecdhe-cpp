@@ -48,7 +48,7 @@ bool operator!=(const Fp& me, const Fp& rhs) {
   return !(me == rhs);
 }
 bool operator!=(const Fp& me, const int rhs){
-  return !(me == Fp(rhs));
+  return !(me == rhs);
 }
 
 

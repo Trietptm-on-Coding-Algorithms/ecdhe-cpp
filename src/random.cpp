@@ -9,7 +9,7 @@ int read_urandom() {
     exit(-1);
   }
   ifs.read(buf, 4);
-  return ((int*)buf)[0];
+  return *((int*)buf);
 }
 
 mpz_class get_random_bytes(const int bit) {

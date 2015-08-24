@@ -22,17 +22,22 @@ RELEASE_FLAGS := -DNDEBUG -O3 -D_FORTIFY_SOURCE=2
 include $(SRCDIR)/Makefile
 include $(TESTDIR)/Makefile
 
-all: $(INCDIR) $(BINDIR) debug
+all: $(INCDIR) debug
 
 debug: EX_FLAGS = $(DEBUG_FLAGS)
-debug: $(BINDIR)/$(TARGET)
+debug: $(BINDIR) $(BINDIR)/$(TARGET)
 
 release: EX_FLAGS = $(RELEASE_FLAGS)
-release: $(BINDIR)/$(TARGET)
+release: $(BINDIR) $(BINDIR)/$(TARGET)
 
 test: $(TESTDIR)/*.cpp $(foreach O,${TEST_OBJS},$(BINDIR)/$O)
 	$(CC) -o $(TESTDIR)/ut $(DEBUG_FLAGS) $(CFLAGS) $(LDFLAGS) -I$(TESTDIR) $^
 	$(TESTDIR)/ut
+	$(RM) $(TESTDIR)/ut
+
+clean:
+	$(RM) -f bin/*.o
+	$(RM) -f bin/$(TARGET)
 
 $(BINDIR)/$(TARGET): $(foreach O,$(OBJS),$(BINDIR)/$O)
 	$(LD) $(LDFLAGS) -o "$@" $^

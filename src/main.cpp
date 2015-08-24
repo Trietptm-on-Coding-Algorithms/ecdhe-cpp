@@ -3,40 +3,40 @@
 #include "ecpoint.h"
 #include "fp.h"
 
+#define ES_TIME_TEST(init, x) do {\
+  std::cout << "Start (" << #x << ")... " << std::endl; \
+  init; \
+  start = clock(); \
+  for (int i = 0; i < CYCLE; i++) { \
+    x; \
+  } \
+  end = clock(); \
+  std::cout << "\tFinished." << std::endl << "Time: " << ((double)end - start)/CLOCKS_PER_SEC/CYCLE * 1e+6 << "usec" << std::endl; \
+} while (0)
+
 int main(int, char**) {
   Fp::init("0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f");
   ECPoint::init();
   ECPoint G;
-  std::cout << "Start Fp p; p *= p(1000*1000 Times repeat)" << std::endl;
-  Fp p = mpz_class(time(0));
-  clock_t start = clock();
-  for (int i = 0; i < 1000; i++) {
-    for (int j = 0; j < 1000; j++) {
-      p *= p;
-    }
-  }
-  clock_t end = clock();
-  std::cout << "Finished Fp." << std::endl << "Time: " << ((double)end - start)/CLOCKS_PER_SEC << "sec" << std::endl;
+  clock_t start, end;
+  const int CYCLE = 1000000;
+  Fp p, q;
 
-  std::cout << "Start G = 10000G(1000 Times repeat)" << std::endl;
-  G = ECPoint(mpz_class(ES_ECC_X), mpz_class(ES_ECC_Y));
-  start = clock();
-  for (int i = 0; i < 1000; i++) {
-    G *= 10000;
-  }
-  end = clock();
-  std::cout << "Finished ECPoint." << std::endl << "Time: " << ((double)end - start)/CLOCKS_PER_SEC << "sec" << std::endl;
+  ES_TIME_TEST(p = Fp(0xdeadbeef), p += p);
+  ES_TIME_TEST(p = Fp(0xdeadbeef), p -= p);
+  ES_TIME_TEST(p = Fp(0xdeadbeef), p *= p);
+  ES_TIME_TEST(p = Fp(0xdeadbeef), p /= p);
+  ES_TIME_TEST(p = Fp(0xdeadbeef), p /= p);
+  ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p += q);
+  ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p -= q);
+  ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p *= q);
+  ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p /= q);
+  ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 1);
+  ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 2);
+  ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 3);
+  ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 4);
+  ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 32);
 
-  std::cout << "Start G = 2G(1000*1000 Times repeat)" << std::endl;
-  G = ECPoint(mpz_class(ES_ECC_X), mpz_class(ES_ECC_Y));
-  start = clock();
-  for (int i = 0; i < 1000; i++) {
-    for (int j = 0; j < 1000; j++) {
-      G = G+G;
-    }
-  }
-  end = clock();
-  std::cout << "Finished ECPoint." << std::endl << "Time: " << ((double)end - start)/CLOCKS_PER_SEC << "sec" << std::endl;
 /*
   mpz_class a = get_random_bytes(1024);
   std::cout << "a = " << a << std::endl;
