@@ -2,14 +2,14 @@
 #include <fstream>
 
 int read_urandom() {
-  char buf[4];
+  int buf;
   std::ifstream ifs("/dev/urandom");
   if (ifs.fail()) {
     std::cerr << "Error occurerd : unable to read /dev/urandom." << std::endl;
     exit(-1);
   }
-  ifs.read(buf, 4);
-  return *((int*)buf);
+  ifs.read((char*)&buf, 4);
+  return buf;
 }
 
 mpz_class get_random_bytes(const int bit) {

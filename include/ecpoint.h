@@ -28,13 +28,13 @@ class ECPoint {
     static void init();
     static bool isPointOnECC(const Fp&, const Fp&);
 
-    friend bool operator==(const ECPoint&, const ECPoint&);
-    friend bool operator!=(const ECPoint&, const ECPoint&);
     friend ECPoint operator+(const ECPoint&, const ECPoint&);
+    friend ECPoint operator-(const ECPoint&);
     friend ECPoint operator-(const ECPoint&, const ECPoint&);
     friend ECPoint operator*(const ECPoint&, const mpz_class&);
+    friend bool operator==(const ECPoint&, const ECPoint&);
+    friend bool operator!=(const ECPoint&, const ECPoint&);
     friend std::ostream& operator<<(std::ostream&, const ECPoint&);
-    friend ECPoint operator-(const ECPoint&);
 };
 
 ECPoint operator*(const ECPoint&, int);

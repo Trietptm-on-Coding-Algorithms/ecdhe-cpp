@@ -7,37 +7,14 @@
   std::cout << "Start (" << #x << ")... " << std::endl; \
   init; \
   start = clock(); \
-  for (int i = 0; i < CYCLE; i++) { \
-    x; \
-  } \
+  for (int i = 0; i < CYCLE; i++) { x; } \
   end = clock(); \
   std::cout << "\tFinished." << std::endl << "Time: " << ((double)end - start)/CLOCKS_PER_SEC/CYCLE * 1e+6 << "usec" << std::endl; \
 } while (0)
 
-int main(int, char**) {
-  Fp::init("0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f");
-  ECPoint::init();
-  ECPoint G;
-  clock_t start, end;
-  const int CYCLE = 1000000;
-  Fp p, q;
 
-  ES_TIME_TEST(p = Fp(0xdeadbeef), p += p);
-  ES_TIME_TEST(p = Fp(0xdeadbeef), p -= p);
-  ES_TIME_TEST(p = Fp(0xdeadbeef), p *= p);
-  ES_TIME_TEST(p = Fp(0xdeadbeef), p /= p);
-  ES_TIME_TEST(p = Fp(0xdeadbeef), p /= p);
-  ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p += q);
-  ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p -= q);
-  ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p *= q);
-  ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p /= q);
-  ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 1);
-  ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 2);
-  ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 3);
-  ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 4);
-  ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 32);
-
-/*
+void ecdhe_test() {
+  ECPoint G = ECPoint(ES_ECC_X, ES_ECC_Y);
   mpz_class a = get_random_bytes(1024);
   std::cout << "a = " << a << std::endl;
 
@@ -63,5 +40,30 @@ int main(int, char**) {
     std::cout << "false";
   }
   std::cout << std::endl;
-  */
+}
+
+int main(int, char**) {
+  Fp::init("0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f");
+  ECPoint::init();
+  ECPoint G;
+  clock_t start, end;
+  const int CYCLE = 1000000;
+  Fp p, q;
+
+  ecdhe_test();
+  ES_TIME_TEST(p = Fp(0xdeadbeef), p += p);
+  ES_TIME_TEST(p = Fp(0xdeadbeef), p -= p);
+  ES_TIME_TEST(p = Fp(0xdeadbeef), p *= p);
+  ES_TIME_TEST(p = Fp(0xdeadbeef), p /= p);
+  ES_TIME_TEST(p = Fp(0xdeadbeef), p /= p);
+  ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p += q);
+  ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p -= q);
+  ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p *= q);
+  ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p /= q);
+  ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 1);
+  ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 2);
+  ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 3);
+  ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 4);
+  ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 32);
+  ES_TIME_TEST(,ecdhe_test());
 }

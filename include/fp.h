@@ -10,17 +10,6 @@ class Fp {
     mpz_class x;
     static mpz_class p;
   public:
-    static void init(const char *);
-
-    friend Fp operator+(const Fp&, const Fp&);
-    friend Fp operator-(const Fp&, const Fp&);
-    friend Fp operator-(const Fp&);
-    friend Fp operator*(const Fp&, const Fp&);
-    friend Fp operator/(const Fp&, const Fp&);
-    friend bool operator==(const Fp&, const Fp&);
-    friend bool operator!=(const Fp&, const Fp&);
-    friend std::ostream& operator<<(std::ostream&, const Fp&);
-
     Fp() : x(0) { }
 
     Fp(const mpz_class& _x) : x(_x % p) {
@@ -36,6 +25,18 @@ class Fp {
         x = mpz_class(_x) % p;
       }
     }
+
+    static void init(const char *);
+
+    friend Fp operator+(const Fp&, const Fp&);
+    friend Fp operator-(const Fp&, const Fp&);
+    friend Fp operator-(const Fp&);
+    friend Fp operator*(const Fp&, const Fp&);
+    friend Fp operator/(const Fp&, const Fp&);
+    friend bool operator==(const Fp&, const Fp&);
+    friend bool operator!=(const Fp&, const Fp&);
+    friend std::ostream& operator<<(std::ostream&, const Fp&);
+
 };
 
 bool operator==(const Fp& me, const int rhs);
