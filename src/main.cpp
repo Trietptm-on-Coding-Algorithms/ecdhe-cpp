@@ -22,7 +22,7 @@ int main(int, char**) {
   G = ECPoint(mpz_class(ES_ECC_X), mpz_class(ES_ECC_Y));
   start = clock();
   for (int i = 0; i < 1000; i++) {
-    G = 10000*G;
+    G *= 10000;
   }
   end = clock();
   std::cout << "Finished ECPoint." << std::endl << "Time: " << ((double)end - start)/CLOCKS_PER_SEC << "sec" << std::endl;

@@ -15,6 +15,7 @@ void Fp::init(const char *prime) {
     throw std::runtime_error("not positive");
   }
 }
+
 Fp operator+(const Fp& me, const Fp& rhs) {
   return Fp(me.x + rhs.x);
 }

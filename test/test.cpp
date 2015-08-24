@@ -64,9 +64,11 @@ void exec_test() {
   test_fp();
   test_ecc_point();
   test_ecdhe(20);
-  printf("[+] Tested %d tests.\n", st_test);
+  std::cout << "[+] Tested " << st_test << " tests." << std::endl;
   if(st_err) {
-    printf("[+] %d error(s) found.\n", st_err);
+    std::cout << "[-] " << st_err << " error(s) found." << std::endl;
+  } else {
+    std::cout << "[+] \033[4;32mAll test passed!\033[0m" << std::endl;
   }
 }
 

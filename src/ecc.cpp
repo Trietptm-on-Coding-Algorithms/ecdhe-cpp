@@ -11,11 +11,9 @@ void ECPoint::init() {
   a.set_str("0", 10);
   b.set_str("7", 10);
 }
-
 ECPoint::ECPoint(const Fp& _x, const Fp& _y) : x(), y(), infinity(false) {
   set(_x, _y);
 }
-
 void ECPoint::set(const Fp& _x, const Fp& _y) {
   if (!isPointOnECC(_x, _y) && !(_x == 0 && _y == 0)) {
     std::cerr << "Error: Point (" << _x << ", " << _y << ") is not point on this curve" << std::endl;
@@ -34,11 +32,9 @@ std::ostream& operator<<(std::ostream& _os, const ECPoint& rhs) {
   }
   return _os;
 }
-
 bool operator==(const ECPoint& me, const ECPoint& rhs) {
   return (me.x == rhs.x && me.y == rhs.y);
 }
-
 bool operator!=(const ECPoint& me, const ECPoint& rhs) {
   return !(me == rhs);
 }
@@ -65,18 +61,15 @@ ECPoint operator+(const ECPoint& me, const ECPoint& rhs) {
   y3 = (l*me.x - l*x3 - me.y);
   return ECPoint(x3, y3);
 }
-
 ECPoint operator-(const ECPoint& me, const ECPoint& rhs) {
   return me + -rhs;
 }
-
 ECPoint operator-(const ECPoint& me) {
   if (me.isInfinity()) {
     return me;
   }
   return ECPoint(me.x, -me.y);
 }
-
 ECPoint operator*(const ECPoint& me, const mpz_class& n) {
   mpz_class d = mpz_class(n);
   if (n == 1) {
@@ -95,17 +88,23 @@ ECPoint operator*(const ECPoint& me, const mpz_class& n) {
   }
   return ret;
 }
-
 ECPoint operator*(int n, const ECPoint& me) {
   return me * mpz_class(n);
 }
-
 ECPoint operator*(const mpz_class& n, const ECPoint& me) {
   return me * mpz_class(n);
 }
-
 ECPoint operator*(const ECPoint& me, int n) {
   return me * mpz_class(n);
+}
+
+ECPoint operator+=(ECPoint& me, const ECPoint& rhs) {
+  me = me + rhs;
+  return me;
+}
+ECPoint operator*=(ECPoint& me, const mpz_class& rhs) {
+  me = rhs * me;
+  return me;
 }
 
 bool ECPoint::isPointOnECC(const Fp& x, const Fp& y) {

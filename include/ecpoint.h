@@ -40,3 +40,5 @@ class ECPoint {
 ECPoint operator*(const ECPoint&, int);
 ECPoint operator*(int, const ECPoint&);
 ECPoint operator*(const mpz_class&, const ECPoint&);
+ECPoint operator+=(ECPoint&, const ECPoint&);
+ECPoint operator*=(ECPoint&, const mpz_class&);
