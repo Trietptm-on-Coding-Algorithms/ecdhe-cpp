@@ -23,43 +23,51 @@ void ECPoint::set(const Fp& _x, const Fp& _y) {
   }
   x = _x;
   y = _y;
+  infinity = (_x == 0 && _y == 0);
 }
 
-std::ostream& operator<<(std::ostream& _os, const ECPoint& ptr) {
-  _os << "(" << ptr.x << ", " << ptr.y << ")";
+std::ostream& operator<<(std::ostream& _os, const ECPoint& rhs) {
+  if (rhs.isInfinity()) {
+    _os << "(Infinity)";
+  } else {
+    _os << "(" << rhs.x << ", " << rhs.y << ")";
+  }
   return _os;
 }
 
-bool operator==(const ECPoint& me, const ECPoint& other) {
-  return (me.x == other.x && me.y == other.y);
+bool operator==(const ECPoint& me, const ECPoint& rhs) {
+  return (me.x == rhs.x && me.y == rhs.y);
 }
 
-bool operator!=(const ECPoint& me, const ECPoint& other) {
-  return !(me == other);
+bool operator!=(const ECPoint& me, const ECPoint& rhs) {
+  return !(me == rhs);
 }
 
-ECPoint operator+(const ECPoint& me, const ECPoint& other) {
+ECPoint operator+(const ECPoint& me, const ECPoint& rhs) {
   Fp x3(0), y3(0), l(0);
 
-  if (other.isInfinity()) {
+  if (rhs.isInfinity()) {
     return me;
   } else if (me.isInfinity()) {
-    return other;
+    return rhs;
+  }
+  if (-me.y == rhs.y) {
+    return ECPoint();
   }
 
-  if (me.x != other.x) {
-    l = (other.y - me.y) / (other.x - me.x);
+  if (me.x != rhs.x) {
+    l = (rhs.y - me.y) / (rhs.x - me.x);
   } else {
-    l = (Fp(3)*me.x*me.x) / (Fp(2)*me.y);
+    l = (Fp(3)*me.x*me.x + me.a) / (Fp(2)*me.y);
   }
 
-  x3 = (l*l - (me.x + other.x));
+  x3 = (l*l - (me.x + rhs.x));
   y3 = (l*me.x - l*x3 - me.y);
   return ECPoint(x3, y3);
 }
 
-ECPoint operator-(const ECPoint& me, const ECPoint& other) {
-  return me + -other;
+ECPoint operator-(const ECPoint& me, const ECPoint& rhs) {
+  return me + -rhs;
 }
 
 ECPoint operator-(const ECPoint& me) {

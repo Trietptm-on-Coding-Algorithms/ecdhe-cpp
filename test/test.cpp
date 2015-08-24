@@ -39,6 +39,7 @@ void test_ecc_point() {
   ES_ASSERT_EQ(3*R, U);
   ES_ASSERT_EQ(4*R, V);
   ES_ASSERT_EQ(24*R,T);
+  ES_ASSERT_EQ((P-P).isInfinity(), true);
 }
 
 void test_fp() {
@@ -56,6 +57,7 @@ void test_fp() {
   ES_ASSERT_EQ(d/b, Fp(5));
   ES_ASSERT_EQ(b+c-d, Fp(0));
   ES_ASSERT_EQ(Fp(-3), Fp(4));
+  ES_ASSERT_EQ(-Fp(6), Fp(1));
 }
 
 void exec_test() {
