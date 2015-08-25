@@ -60,12 +60,16 @@ std::ostream& operator<<(std::ostream& os, const Fp& rhs) {
 }
 Fp& Fp::operator+=(const Fp& rhs) {
   x += rhs.x;
-  x %= p;
+  if (x >= p) {
+    x -= p;
+  }
   return *this;
 }
 Fp& Fp::operator-=(const Fp& rhs) {
   x -= rhs.x;
-  x %= p;
+  if (x < 0) {
+    x += p;
+  }
   return *this;
 }
 Fp& Fp::operator*=(const Fp& rhs) {
