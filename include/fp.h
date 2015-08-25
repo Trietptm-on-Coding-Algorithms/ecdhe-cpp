@@ -13,18 +13,24 @@ class Fp {
     Fp() : x(0) { }
 
     Fp(const mpz_class& _x) : x(_x % p) {
-      if (_x < 0) {
-        x = (_x + p) % p;
+      if (_x > 0) {
+        return;
       }
+      x = (_x + p) % p;
     }
 
     Fp(const char *_x) {
+      //x = _x?mpz_class(_x)%p:0;
       if (_x == 0) {
         x = 0;
       } else {
         x = mpz_class(_x) % p;
       }
     }
+    Fp& operator+=(const Fp& rhs);
+    Fp& operator-=(const Fp& rhs);
+    Fp& operator*=(const Fp& rhs);
+    Fp& operator/=(const Fp& rhs);
 
     static void init(const char *);
 
@@ -42,7 +48,3 @@ class Fp {
 bool operator==(const Fp& me, const int rhs);
 bool operator!=(const Fp& me, const int rhs);
 
-Fp operator+=(Fp& me, const Fp& rhs);
-Fp operator-=(Fp& me, const Fp& rhs);
-Fp operator*=(Fp& me, const Fp& rhs);
-Fp operator/=(Fp& me, const Fp& rhs);

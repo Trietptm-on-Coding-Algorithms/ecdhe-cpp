@@ -11,7 +11,7 @@ TARGET := ecdhe
 
 CFLAGS        := -Wall -Wextra -std=c++11 -I$(INCDIR)
 LDFLAGS       := -lgmp -lgmpxx
-DEBUG_FLAGS   := -O0 -g 
+DEBUG_FLAGS   := -O0 -g -pg
 RELEASE_FLAGS := -DNDEBUG -O3 -D_FORTIFY_SOURCE=2
 
 .PHONY: all
@@ -40,7 +40,7 @@ clean:
 	$(RM) -f bin/$(TARGET)
 
 $(BINDIR)/$(TARGET): $(foreach O,$(OBJS),$(BINDIR)/$O)
-	$(LD) $(LDFLAGS) -o "$@" $^
+	$(LD) $(LDFLAGS) $(EX_FLAGS) -o "$@" $^
 
 $(BINDIR)/%.o: $(SRCDIR)/%.cpp $(INCDIR)/*.h
 	$(CC) $(CFLAGS) $(EX_FLAGS) -c -o "$@" "$<"

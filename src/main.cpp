@@ -50,20 +50,18 @@ int main(int, char**) {
   const int CYCLE = 1000000;
   Fp p, q;
 
-  ecdhe_test();
   ES_TIME_TEST(p = Fp(0xdeadbeef), p += p);
   ES_TIME_TEST(p = Fp(0xdeadbeef), p -= p);
   ES_TIME_TEST(p = Fp(0xdeadbeef), p *= p);
-  ES_TIME_TEST(p = Fp(0xdeadbeef), p /= p);
-  ES_TIME_TEST(p = Fp(0xdeadbeef), p /= p);
   ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p += q);
   ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p -= q);
   ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p *= q);
   ES_TIME_TEST(p = Fp(0xdeadbeef); q = Fp(0xcafebabe), p /= q);
   ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 1);
   ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 2);
+  /*
   ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 3);
   ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 4);
   ES_TIME_TEST(G = ECPoint(ES_ECC_X, ES_ECC_Y), G *= 32);
-  ES_TIME_TEST(,ecdhe_test());
+  ES_TIME_TEST(,ecdhe_test());*/
 }

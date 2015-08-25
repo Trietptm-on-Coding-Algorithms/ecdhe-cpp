@@ -33,7 +33,7 @@ Fp operator*(const Fp& me, const Fp& rhs) {
   return Fp(me.x * rhs.x);
 }
 Fp operator/(const Fp& me, const Fp& rhs) { 
-  mpz_class c(rhs.x);
+  mpz_class c;
   invMod(c, rhs.x, Fp::p);
   return me * c;
 }
@@ -56,19 +56,21 @@ std::ostream& operator<<(std::ostream& os, const Fp& rhs) {
   os << rhs.x;
   return os;
 }
-Fp operator+=(Fp& me, const Fp& rhs) {
-  me = me + rhs;
-  return me;
+Fp& Fp::operator+=(const Fp& rhs) {
+  x = (x + rhs.x)%p;
+  return *this;
 }
-Fp operator-=(Fp& me, const Fp& rhs) {
-  me = me - rhs;
-  return me;
+Fp& Fp::operator-=(const Fp& rhs) {
+  x = (x - rhs.x)%p;
+  return *this;
 }
-Fp operator*=(Fp& me, const Fp& rhs) {
-  me = me * rhs;
-  return me;
+Fp& Fp::operator*=(const Fp& rhs) {
+  x = (x * rhs.x)%p;
+  return *this;
 }
-Fp operator/=(Fp& me, const Fp& rhs) {
-  me = me / rhs;
-  return me;
+Fp& Fp::operator/=(const Fp& rhs) {
+  mpz_class c;
+  invMod(c, rhs.x, p);
+  x = (x * c)%p;
+  return *this;
 }

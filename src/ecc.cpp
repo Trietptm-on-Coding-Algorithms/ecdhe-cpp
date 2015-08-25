@@ -15,7 +15,7 @@ ECPoint::ECPoint(const Fp& _x, const Fp& _y) : x(), y(), infinity(false) {
   set(_x, _y);
 }
 void ECPoint::set(const Fp& _x, const Fp& _y) {
-  if (!isPointOnECC(_x, _y) && !(_x == 0 && _y == 0)) {
+  if (!(isPointOnECC(_x, _y) || (_x == 0 && _y == 0))) {
     std::cerr << "Error: Point (" << _x << ", " << _y << ") is not point on this curve" << std::endl;
     throw std::runtime_error("Point is not point on this curve.");
   }
@@ -71,12 +71,12 @@ ECPoint operator-(const ECPoint& me) {
   return ECPoint(me.x, -me.y);
 }
 ECPoint operator*(const ECPoint& me, const mpz_class& n) {
-  mpz_class d = mpz_class(n);
   if (n == 1) {
     return me;
   } else if (n == 2) {
     return me + me;
   }
+  mpz_class d = n;
   ECPoint P = ECPoint(me);
   ECPoint ret;
   while(d != 0) {
