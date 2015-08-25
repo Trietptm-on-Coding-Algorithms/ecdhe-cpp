@@ -1,27 +1,27 @@
 Start (p += p)... 
         Finished.
-Time: 0.7usec
+Time: 0.54usec
 Start (p -= p)... 
         Finished.
-Time: 0.76usec
+Time: 0.19usec
 Start (p *= p)... 
         Finished.
-Time: 1.7usec
+Time: 1.45usec
 Start (p += q)... 
         Finished.
-Time: 0.51usec
+Time: 0.31usec
 Start (p -= q)... 
         Finished.
-Time: 1.26usec
+Time: 0.29usec
 Start (p *= q)... 
         Finished.
-Time: 0.82usec
+Time: 0.67usec
 Start (p /= q)... 
         Finished.
-Time: 4.16usec
+Time: 3.82usec
 Start (G *= 1)... 
         Finished.
-Time: 1.18usec
+Time: 1.34usec
 Start (G *= 2)... 
         Finished.
-Time: 51.98usec
+Time: 68.57usec

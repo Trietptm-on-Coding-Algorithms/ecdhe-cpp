@@ -20,11 +20,11 @@ Fp operator+(const Fp& me, const Fp& rhs) {
   return Fp(me.x + rhs.x);
 }
 Fp operator-(const Fp& me, const Fp& rhs) {
-  mpz_class c(me.x - rhs.x);
-  if (c < 0) {
-    c += Fp::p;
+  mpz_class c = me.x - rhs.x;
+  if (c > 0) {
+    return c;
   }
-  return Fp(c);
+    return Fp(c + Fp::p);
 }
 Fp operator-(const Fp& me) {
   return Fp(-me.x) + Fp::p;
@@ -50,7 +50,6 @@ bool operator!=(const Fp& me, const Fp& rhs) {
 bool operator!=(const Fp& me, const int rhs){
   return !(me == rhs);
 }
-
 
 std::ostream& operator<<(std::ostream& os, const Fp& rhs) {
   os << rhs.x;
