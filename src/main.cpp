@@ -47,7 +47,7 @@ int main(int, char**) {
   ECPoint::init();
   ECPoint G;
   clock_t start, end;
-  const int CYCLE = 1000000;
+  constexpr int CYCLE = 1000000;
   Fp p, q;
 
   ES_TIME_TEST(p = Fp(0xdeadbeef), p += p);

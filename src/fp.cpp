@@ -6,8 +6,11 @@
 mpz_class Fp::p;
 
 inline void invMod(mpz_class& z, const mpz_class& x, const mpz_class& m) {
-  assert(m != 0);
-  mpz_invert(z.get_mpz_t(), x.get_mpz_t(), m.get_mpz_t());
+  if (m != 0) {
+    mpz_invert(z.get_mpz_t(), x.get_mpz_t(), m.get_mpz_t());
+  } else {
+    throw std::runtime_error("Error: Divided by 0");
+  }
 }
 void Fp::init(const char *prime) {
   p = mpz_class(prime);
