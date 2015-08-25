@@ -60,8 +60,11 @@ ECPoint operator+(const ECPoint& me, const ECPoint& rhs) {
     l /= Fp(2)*me.y;
   }
 
-  x3 = (l*l - (me.x + rhs.x));
-  y3 = (l*me.x - l*x3 - me.y);
+  x3 = l*l;
+  x3 -= me.x + rhs.x;
+  y3 = me.x - x3;
+  y3 *= l;
+  y3 -= me.y;
   return ECPoint(x3, y3);
 }
 ECPoint operator-(const ECPoint& me, const ECPoint& rhs) {
@@ -86,7 +89,7 @@ ECPoint operator*(const ECPoint& me, const mpz_class& n) {
     if ((d & 1) == 1) {
       ret = P + ret;
     }
-    P = P + P;
+    P += P;
     d >>= 1;
   }
   return ret;
