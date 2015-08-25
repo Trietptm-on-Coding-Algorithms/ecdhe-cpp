@@ -15,13 +15,14 @@ ECPoint::ECPoint(const Fp& _x, const Fp& _y) : x(), y(), infinity(false) {
   set(_x, _y);
 }
 void ECPoint::set(const Fp& _x, const Fp& _y) {
-  if (!(isPointOnECC(_x, _y) || (_x == 0 && _y == 0))) {
-    std::cerr << "Error: Point (" << _x << ", " << _y << ") is not point on this curve" << std::endl;
-    throw std::runtime_error("Point is not point on this curve.");
+  if (isPointOnECC(_x, _y) || (_x == 0 && _y == 0)) {
+    x = _x;
+    y = _y;
+    infinity = (_x == 0 && _y == 0);
+    return;
   }
-  x = _x;
-  y = _y;
-  infinity = (_x == 0 && _y == 0);
+  std::cerr << "Error: Point (" << _x << ", " << _y << ") is not point on this curve" << std::endl;
+  throw std::runtime_error("Point is not point on this curve.");
 }
 
 std::ostream& operator<<(std::ostream& _os, const ECPoint& rhs) {
@@ -52,9 +53,11 @@ ECPoint operator+(const ECPoint& me, const ECPoint& rhs) {
   }
 
   if (me.x != rhs.x) {
-    l = (rhs.y - me.y) / (rhs.x - me.x);
+    l = rhs.y - me.y;
+    l /= rhs.x - me.x;
   } else {
-    l = (Fp(3)*me.x*me.x + me.a) / (Fp(2)*me.y);
+    l = Fp(3)*me.x*me.x + me.a;
+    l /= Fp(2)*me.y;
   }
 
   x3 = (l*l - (me.x + rhs.x));

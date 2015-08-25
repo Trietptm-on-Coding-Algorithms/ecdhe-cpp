@@ -59,20 +59,24 @@ std::ostream& operator<<(std::ostream& os, const Fp& rhs) {
   return os;
 }
 Fp& Fp::operator+=(const Fp& rhs) {
-  x = (x + rhs.x)%p;
+  x += rhs.x;
+  x %= p;
   return *this;
 }
 Fp& Fp::operator-=(const Fp& rhs) {
-  x = (x - rhs.x)%p;
+  x -= rhs.x;
+  x %= p;
   return *this;
 }
 Fp& Fp::operator*=(const Fp& rhs) {
-  x = (x * rhs.x)%p;
+  x *= rhs.x;
+  x %= p;
   return *this;
 }
 Fp& Fp::operator/=(const Fp& rhs) {
   mpz_class c;
   invMod(c, rhs.x, p);
-  x = (x * c)%p;
+  x *= c;
+  x %= p;
   return *this;
 }
